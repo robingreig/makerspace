@@ -9,3 +9,5 @@ sudo apt-get install wpasupplicant -y
 sudo apt-mark hold wpasupplicant
 sudo cp -f /etc/apt/sources.list.bak /etc/apt/sources.list
 sudo apt-get update
+sudo mv -f /etc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf.bak
+sudo cp -f ./wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
