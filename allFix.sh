@@ -2,10 +2,10 @@
 
 # Connect to Ethernet before running so that it can access updates
 
-## Add SAIT IP addresses for NTP servers
+# Add SAIT IP addresses for NTP servers
 sudo cp -f /etc/systemd/timesyncd.conf /etc/systemd/timesyncd.conf.bak
 sudo bash -c "echo 'NTP= 10.197.2.9 10.197.3.9' >> /etc/systemd/timesyncd.conf"
-#sudo timedatectl set-ntp true
+sudo timedatectl set-ntp true
 
 # Set current time
 read -p 'Current Date YYYY/MM/DD: ' datevar
@@ -26,7 +26,7 @@ sudo apt-mark hold wpasupplicant
 sudo cp -f /etc/apt/sources.list.bak /etc/apt/sources.list
 sudo apt update
 
-## Update wpa_supplicant file
+# Update wpa_supplicant file
 sudo cp -f /etc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf.bak
 sudo bash -c "echo 'country=CA' > /etc/wpa_supplicant/wpa_supplicant.conf"
 sudo bash -c "echo 'ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev' >> /etc/wpa_supplicant/wpa_supplicant.conf"
