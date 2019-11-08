@@ -1,46 +1,6 @@
 #!/bin/bash
 
-# Connect to Ethernet before running so that it can access updates
-
-# Add SAIT IP addresses for NTP servers
-echo ''
-bash -c "echo '************************* STARTING update of timesyncd file'"
-sudo cp -f /etc/systemd/timesyncd.conf /etc/systemd/timesyncd.conf.bak
-sudo bash -c "echo 'NTP= 10.197.2.9 10.197.3.9 0.ca.pool.ntp.org 1.ca.pool.ntp.org' >> /etc/systemd/timesyncd.conf"
-bash -c "echo '************************* Update of timesyncd file COMPLETED\n'"
-#sudo timedatectl set-ntp true
-sleep 2
-
-# Set current time
-echo ''
-bash -c "echo '************************* UPDATING date & time for update & upgrade'"
-bash -c "echo '\nSetting current date & time for update & upgrade'"
-read -p 'Current Date YYYY/MM/DD: ' datevar
-sudo date -s $datevar
-read -p 'Current Time HH:MM: ' timevar
-sudo date -s $timevar
-
-# Update && Upgrade
-echo ''
-bash -c "echo '************************* STARTING update & upgrade (this will take a few minutes)'"
-sudo apt update && sudo apt upgrade -y
-echo ''
-bash -c "echo 'Update & Upgrade COMPLETED'"
-
-# Temporary fix for WPA Enterprise on Raspbian Buster
-echo ''
-bash -c "echo '************************* STARTING update of wpa_supplicant file'"
-sudo apt remove wpasupplicant -y
-sudo mv -f /etc/apt/sources.list /etc/apt/sources.list.bak
-sudo bash -c "echo 'deb http://raspbian.raspberrypi.org/raspbian/ stretch main contrib non-free rpi' > /etc/apt/sources.list"
-sudo apt update
-sudo apt install wpasupplicant -y
-sudo apt-mark hold wpasupplicant
-sudo cp -f /etc/apt/sources.list.bak /etc/apt/sources.list
-sudo apt update
-bash -c "echo '************************* wpa_supplicant downgraded to v2.4'"
-
-# Update wpa_supplicant file
+## Update wpa_supplicant file
 echo ''
 bash -c "echo '************************* STARTING update of wpa_supplicant file'"
 sudo cp -f /etc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf.bak
@@ -79,5 +39,5 @@ bash -c "echo '************************* Updating wpa_supplicant file DONE'"
 bash -c echo ''
 bash -c "echo '************************* REBOOTING in 6 seconds to initialize all changes'"
 sleep 6
-sudo reboot
+#sudo reboot
 
